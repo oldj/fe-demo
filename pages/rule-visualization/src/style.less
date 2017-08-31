@@ -1,0 +1,132 @@
+
+.rule-v-container {
+  position: relative;
+  background: #fff;
+  margin: 40px 0;
+  font-size: 12px;
+  line-height: 30px;
+
+  @border-color: #cbcbcb;
+  @border-not-color: #a44f4e;
+  @bg-not-color: rgba(188, 78, 76, 0.2);
+  @bg-hl: #bae9f6;
+  @border-hl: @bg-hl * 0.9;
+
+  .rule {
+    /*position: relative;*/
+    position: absolute;
+    z-index: 10;
+
+    @outline-offset: 5px;
+
+    &.not {
+      @bg-not: rgba(0, 0, 0, 0.03);
+      outline: 1px solid @border-color;
+      outline-offset: @outline-offset;
+      background: @bg-not;
+      //padding: 2px 4px;
+      box-shadow: 0 0 0 @outline-offset @bg-not;
+    }
+
+    .rule-not { // ! icon
+      position: absolute;
+      z-index: 15;
+      @size: 14px;
+      width: @size;
+      height: @size;
+      line-height: @size;
+      font-size: 12px;
+      top: 5px;
+      left: (-8px - @outline-offset);
+      text-align: center;
+      // https://img.alicdn.com/tps/TB1_OTKNFXXXXXyaFXXXXXXXXXX-28-28.png
+      background: @border-color url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAFFJREFUSA1jYBgFQz0EGEn1wH8gQNbDCATIfEJsJkIKqC0/aiG1Q5RhNEhHg5TkEBj+iYbkIBnVMOhCgKS6DOT60fqQUBzSPeMTctCo/OAPAQDH5QgfRVAYjgAAAABJRU5ErkJggg==) no-repeat 50% 50%;
+      background-size: @size @size;
+      text-indent: -4em;
+      overflow: hidden;
+      color: #fff;
+      border-radius: 50%;
+    }
+
+    &:hover {
+      &.not {
+        @bg-not: rgba(255, 0, 0, 0.1);
+        outline-color: @border-not-color;
+        background-color: @bg-not;
+        box-shadow: 0 0 0 @outline-offset @bg-not;
+      }
+
+      > .rule-not {
+        background-color: @border-not-color;
+      }
+    }
+  }
+
+  .node {
+    border: solid 1px @border-color;
+    /*padding: 0;*/
+    background: #fff;
+    min-width: 2em;
+    text-align: center;
+    line-height: 28px;
+    border-radius: 4px;
+
+    &:hover {
+      .rule-v-btn {
+        display: block;
+      }
+    }
+
+    &.rule-v-hl {
+      background: @bg-hl !important;
+      border-color: @border-hl !important;
+    }
+  }
+
+  canvas {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+  }
+
+  .rule-v-btn {
+    display: none;
+    position: absolute;
+    z-index: 20;
+    top: 10px;
+    background: #00c;
+    color: #fff;
+    text-align: center;
+    height: 10px;
+    width: 10px;
+    line-height: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &.rule-v-btn-add-before {
+      left: -4px;
+    }
+    &.rule-v-btn-add-after {
+      right: -4px;
+    }
+    &.rule-v-btn-add-top {
+      top: -4px;
+      left: 25px;
+    }
+    &.rule-v-btn-add-bottom {
+      top: 24px;
+      left: 25px;
+    }
+
+    &.btn-remove {
+      background: #f00;
+      top: -4px;
+      right: -4px;
+    }
+  }
+
+  input {
+
+  }
+}

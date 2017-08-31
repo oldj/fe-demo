@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>rule-visualization</title>
+	<!--<link rel="stylesheet" href="../dist/style.css">-->
+	<link rel="stylesheet" href="../../common/basic.css">
+	<style>
+		body {
+			background: #f5f5f5;
+		}
+	</style>
+</head>
+<body>
+
+<h1>rule-visualization demo</h1>
+<div id="input">
+	<textarea id="user-rules" cols="80" rows="4"></textarea>
+	<div>
+		<button id="do-apply">apply</button>
+	</div>
+</div>
+
+<div id="rule-wrapper"></div>
+<div id="footer">
+	<a href="https://github.com/oldj/fe-demo/tree/master/pages/rule-visualization">Source</a>
+</div>
+
+<script src="../../common/jquery-3.1.0.min.js"></script>
+<script src="../../dist/rule-visualization.bundle.js"></script>
+<script>
+  $(document).ready(function () {
+    var rulev
+    let my_rules = '((15 & 7) | (21 & 22) | (23 & !24) | (25 & 26) | (27 & 28) | (29 & 30) | !(31 & 32) | (33 & 34)) & 10 & (2 | 11) & (5 | (2 & 19 & 16) | !(!11 & 20 & 16) | (35 | 36) | 3 | (12 & 121 & (122 | 123 | (124 & !125 & 126))) | 4 | 6 | (17 & !(171 | 172)) | 18)'
+//		 let my_rules = '14 & 17 & 21 & 16 & 6 & 7 & 8 & (24 | 15 | 25 | 18) & 2 & 1 & 4 & 3 & 5 & ((((11 & 9 & 10) | (!11 & 13 & 12 & 19 & !9)) | (23 & 22 & 10)) | (27 & 26 & 23))';
+//		 let my_rules = '1 & 11 & (2 | 3) & (4 | 5 | (61 & 62 & (45|55)) | !7)';
+//		 let my_rules = '!(1&!2)';
+    $('#user-rules').val(my_rules)
+    $('#do-apply').click(apply).click()
+
+    function apply () {
+      $('#rule-wrapper').show()
+      rulev = new RuleVisualizer($('#user-rules').val(), $('#rule-wrapper'), {
+        node_width: 30,
+        node_height: 20,
+        styles: {
+          '2': {'background': '#f99'},
+          '3': {'background': '#42985d'},
+          '4': {'background': '#a829f3', 'border': '1px solid #00f'}
+        },
+        ready: () => {
+          // on rendered
+          console.log('height:', $('#rule-wrapper').height())
+        }
+      })
+      $('#input textarea').val(rulev.toStr())
+
+      setTimeout(() => {
+        rulev.highLight([15, '20']) // 高亮规则 15、20，参数可以为数字、文本
+      }, 1000)
+
+      setTimeout(() => {
+        rulev.highLight('2') // 高亮规则 2，只有一个参数时可以直接传规则名
+      }, 2000)
+
+      setTimeout(() => {
+        rulev.highLight(null) // 清除高亮
+      }, 3000)
+    }
+
+  })
+</script>
+</body>
+</html>

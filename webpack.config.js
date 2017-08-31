@@ -3,43 +3,31 @@ const webpack = require('webpack')
 
 module.exports = {
   entry: {
-    'dot-line': './pages/dot-line/entry.js'
-  }, // string | object | array
-  // Here the application starts executing
-  // and webpack starts bundling
+    'dot-line': './pages/dot-line/entry.js',
+    'rule-visualization': './pages/rule-visualization/src/main.js'
+  },
 
   output: {
-    // options related to how webpack emits results
-
     path: path.resolve(path.join(__dirname, 'pages'), 'dist'), // string
-    // the target directory for all output files
-    // must be an absolute path (use the Node.js path module)
-
-    filename: '[name].bundle.js', // string
-    // the filename template for entry chunks
-
-    libraryTarget: 'umd' // universal module definition
-    // the type of the exported library
-
-    /* Advanced output configuration (click to show) */
+    filename: '[name].bundle.js' // string
   },
 
   module: {
-    // configuration regarding modules
 
     rules: [
-      // rules for modules (configure loaders, parser options, etc.)
-
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
-        // the loader which should be applied, it'll be resolved relative to the context
-        // -loader suffix is no longer optional in webpack2 for clarity reasons
-        // see webpack 1 upgrade guide
-
         options: {
           presets: ['es2015']
         }
+      }, {
+        test: /\.less$/,
+        loader: ['style-loader', 'css-loader', 'less-loader'],
+        exclude: /node_modules/
+      }, {
+        test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
+        use: 'url-loader?limit=30000&name=[name]-[hash].[ext]'
       }
     ]
 
