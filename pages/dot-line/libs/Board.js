@@ -13,9 +13,9 @@ export default class Board {
     this.el = el
     this.width = width
     this.height = height
-    this.dot_count = options.dot_count || Math.floor(Math.sqrt(width * height) / 10)
+    this.dotCount = options.dotCount || Math.floor((width * height / Math.pow(120, 2)))
     this.options = options
-    this.bgColor = options.bgColor || '#ffffff'
+    this.bgColor = options.bgColor
 
     let el_canvas = document.createElement('canvas')
     el.innerHTML = ''
@@ -43,8 +43,8 @@ export default class Board {
 
   makeDots () {
     this.dots = []
-    let  {width, height, dot_count, options, dots} = this
-    for (let i = 0; i < dot_count; i++) {
+    let  {width, height, dotCount, options, dots} = this
+    for (let i = 0; i < dotCount; i++) {
       dots.push(new Dot(this, width * Math.random(), height * Math.random(), options))
     }
   }
@@ -56,9 +56,13 @@ export default class Board {
   render () {
     // clear
     let {ctx, width, height, bgColor} = this
-    ctx.fillStyle = bgColor
-    ctx.rect(0, 0, width, height)
-    ctx.fill()
+    if (bgColor) {
+      ctx.fillStyle = bgColor
+      ctx.rect(0, 0, width, height)
+      ctx.fill()
+    } else {
+      ctx.clearRect(0, 0, width, height)
+    }
 
     this.dots.map(dot => dot.render())
   }
